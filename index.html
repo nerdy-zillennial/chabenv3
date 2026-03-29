@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chaben Technology Solution Ltd</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ─── TOKENS ─────────────────────────────────────────────────── */
+:root{
+  --navy:#0D1E3A;--gold:#B8892A;--gold-light:#D4A84B;
+  --techblue:#1A6B9E;--slate:#3E4E5E;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{background:#fff;color:var(--navy);overflow-x:hidden;font-family:Georgia,serif;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:#f0f4f8;}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+::selection{background:rgba(184,137,42,.18);color:var(--navy);}
+
+/* ─── UTILITIES ─────────────────────────────────────────────── */
+.gold-bar{display:block;width:40px;height:2px;background:var(--gold);flex-shrink:0;}
+.gold-rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.grad{background:linear-gradient(135deg,#B8892A,#D4A84B,#B8892A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.font-display{font-family:'Cormorant Garamond',Georgia,serif;}
+.font-ui{font-family:'Montserrat',system-ui,sans-serif;}
+
+.eyebrow{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold);
+}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.vis{opacity:1;transform:none;}
+
+/* ─── LAYOUT ─────────────────────────────────────────────────── */
+.container{max-width:1200px;margin:0 auto;padding:0 24px;}
+@media(min-width:1024px){.container{padding:0 48px;}}
+.section{padding:96px 0;}
+.section-sm{padding:80px 0;}
+.grid-2{display:grid;grid-template-columns:1fr;gap:40px;}
+.grid-3{display:grid;grid-template-columns:1fr;gap:24px;}
+@media(min-width:768px){.grid-3{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:1024px){.grid-2{grid-template-columns:1fr 1fr;gap:64px;}}
+
+/* ─── BUTTONS ───────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:'Montserrat',sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;
+  border:none;cursor:pointer;text-decoration:none;padding:13px 30px;
+  transition:all .25s ease;
+}
+.btn-gold{background:var(--gold);color:var(--navy);}
+.btn-gold:hover{background:var(--gold-light);box-shadow:0 8px 28px rgba(184,137,42,.35);transform:translateY(-1px);}
+.btn-navy{background:var(--navy);color:#fff;}
+.btn-navy:hover{background:var(--techblue);transform:translateY(-1px);}
+.btn-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35);font-weight:600;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.btn-outline-navy{background:transparent;color:var(--navy);border:1.5px solid var(--navy);font-weight:600;}
+.btn-outline-navy:hover{background:var(--navy);color:#fff;}
+
+/* ─── CARDS ─────────────────────────────────────────────────── */
+.card{
+  background:#fff;border:1px solid rgba(13,30,58,.08);
+  transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden;
+}
+.card::after{
+  content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s;
+}
+.card:hover{transform:translateY(-5px);box-shadow:0 18px 52px rgba(13,30,58,.11);}
+.card:hover::after{transform:scaleX(1);}
+
+/* ─── NAV ───────────────────────────────────────────────────── */
+#nav-header{
+  position:fixed;inset-x:0;top:0;z-index:100;height:72px;
+  display:flex;align-items:center;transition:all .3s ease;
+}
+#nav-header.scrolled{
+  background:rgba(255,255,255,.97);backdrop-filter:blur(10px);
+  box-shadow:0 1px 0 rgba(13,30,58,.09);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;height:100%;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;cursor:pointer;
+  text-decoration:none;flex-shrink:0;
+}
+/* Logo wrapper — dark circle so monogram reads on both light & dark nav */
+.nav-logo-img-wrap{
+  width:36px;height:36px;border-radius:50%;
+  background:#0D1E3A;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;overflow:hidden;
+}
+.nav-logo-img{width:36px;height:36px;object-fit:contain;display:block;}
+.nav-brand-name{
+  font-family:'Cormorant Garamond',serif;font-weight:700;
+  font-size:15px;letter-spacing:.18em;line-height:1;transition:color .3s;
+}
+.nav-brand-sub{
+  font-family:'Montserrat',sans-serif;font-size:7.5px;font-weight:700;
+  letter-spacing:.28em;text-transform:uppercase;color:#B8892A;
+  line-height:1;margin-top:3px;
+}
+/* FIX: push nav links away from brand name */
+.nav-links{display:flex;align-items:center;gap:32px;margin-left:auto;padding-left:48px;}
+.nav-link{
+  font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  position:relative;text-decoration:none;transition:color .2s;cursor:pointer;
+}
+.nav-link::after{
+  content:'';position:absolute;bottom:-3px;left:0;
+  width:0;height:1.5px;background:var(--gold);transition:width .2s;
+}
+.nav-link:hover::after,.nav-link.active::after{width:100%;}
+.nav-cta-wrap{flex-shrink:0;margin-left:32px;}
+.burger{
+  display:none;flex-direction:column;gap:5px;padding:6px;
+  cursor:pointer;background:none;border:none;
+}
+.burger span{display:block;width:22px;height:1.5px;transition:all .3s;}
+@media(max-width:900px){
+  .nav-links,.nav-cta-wrap{display:none;}
+  .burger{display:flex;}
+}
+.mobile-menu{
+  display:none;position:fixed;top:72px;left:0;right:0;z-index:99;
+  padding:20px 24px 28px;background:rgba(255,255,255,.98);
+  border-bottom:1px solid rgba(13,30,58,.08);
+  flex-direction:column;gap:18px;
+}
+.mobile-menu.open{display:flex;}
+
+/* ─── PAGE HERO (inner pages) ───────────────────────────────── */
+.page-hero{
+  background:linear-gradient(135deg,#0D1E3A 0%,#1A3259 55%,#1A6B9E 100%);
+  position:relative;overflow:hidden;
+}
+.page-hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(184,137,42,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(184,137,42,.04) 1px,transparent 1px);
+  background-size:52px 52px;
+}
+.page-hero-inner{position:relative;z-index:2;padding-top:140px;padding-bottom:96px;}
+.page-hero h1{
+  font-family:'Cormorant Garamond',serif;font-weight:700;color:#fff;
+  font-size:clamp(2.5rem,5vw,4rem);line-height:1.08;margin:12px 0 14px;
+}
+.page-hero > div > p{
+  font-size:1.05rem;line-height:1.75;color:rgba(255,255,255,.6);max-width:500px;
+}
+
+/* ─── FOOTER ──────────────────────────────────────────────────*/
+footer{background:#0D1E3A;}
+.footer-gold-top{height:2px;background:#B8892A;}
+.footer-inner{padding:60px 0 36px;}
+.footer-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:36px;
+  margin-bottom:48px;
+}
+@media(min-width:768px){
+  .footer-grid{
+    grid-template-columns:2.2fr 1.2fr 1.2fr;
+    gap:48px;
+    align-items:start;
+  }
+}
+.footer-brand-col{}
+.footer-col{}
+.footer-logo-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:15px;letter-spacing:.18em;color:#fff;line-height:1;}
+.footer-brand-sub{font-family:'Montserrat',sans-serif;font-size:7.5px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#B8892A;margin-top:3px;}
+.footer-desc{font-size:13px;color:rgba(255,255,255,.38);line-height:1.8;margin-bottom:14px;max-width:280px;}
+.footer-parent{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#B8892A;}
+.footer-col-title{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#B8892A;margin-bottom:16px;}
+.footer-link{display:block;font-size:13px;color:rgba(255,255,255,.35);margin-bottom:10px;cursor:pointer;transition:color .2s;text-decoration:none;}
+.footer-link:hover{color:rgba(255,255,255,.75);}
+.footer-bottom{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;}
+.footer-copy{font-family:'Montserrat',sans-serif;font-size:11px;color:rgba(255,255,255,.2);}
+.footer-legal{display:flex;gap:20px;}
+.footer-legal a{font-family:'Montserrat',sans-serif;font-size:11px;color:rgba(255,255,255,.2);text-decoration:none;transition:color .2s;}
+.footer-legal a:hover{color:rgba(255,255,255,.55);}
+
+/* ─── SPA ───────────────────────────────────────────────────── */
+.page{display:none;}.page.active{display:block;}
+
+/* ─── FORM ──────────────────────────────────────────────────── */
+.field-label{
+  display:block;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--slate);margin-bottom:6px;
+}
+.field-input{
+  width:100%;background:#fff;border:1.5px solid rgba(13,30,58,.15);
+  color:var(--navy);font-family:'Georgia',serif;font-size:15px;padding:12px 15px;
+  outline:none;transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;appearance:none;
+}
+.field-input::placeholder{color:rgba(13,30,58,.3);}
+.field-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,137,42,.1);}
+
+/* ─── SERVICE CARDS ─────────────────────────────────────────── */
+.svc-icon-wrap{width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:#EEF2F7;flex-shrink:0;}
+.svc-title{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.22rem;color:#0D1E3A;line-height:1.2;margin-bottom:12px;transition:color .25s;}
+.card:hover .svc-title{color:#1A6B9E;}
+.svc-body{font-size:14px;line-height:1.75;color:#3E4E5E;margin-bottom:20px;}
+.svc-link{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#1A6B9E;transition:color .22s;}
+.card:hover .svc-link{color:#0D1E3A;}
+
+/* ─── HERO specifics ────────────────────────────────────────── */
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.07;}
+.hero-grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(184,137,42,1) 1px,transparent 1px),linear-gradient(90deg,rgba(184,137,42,1) 1px,transparent 1px);background-size:60px 60px;opacity:.04;pointer-events:none;}
+.hero-glow{position:absolute;right:0;top:50%;transform:translateY(-50%);width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(26,107,158,.22) 0%,transparent 70%);pointer-events:none;}
+
+/* ─── WHY collage ───────────────────────────────────────────── */
+.collage-wrap{position:relative;height:480px;}
+.collage-main{position:absolute;inset:0;overflow:hidden;border:1px solid rgba(13,30,58,.1);}
+.collage-stat{position:absolute;bottom:-20px;left:-20px;padding:22px 26px;background:#fff;box-shadow:0 10px 40px rgba(13,30,58,.12);border:1px solid rgba(13,30,58,.08);}
+.collage-badge{position:absolute;top:-20px;right:-20px;padding:18px 22px;background:#B8892A;}
+@media(max-width:1023px){.collage-wrap{display:none;}.why-grid{grid-template-columns:1fr!important;}}
+
+/* ─── STATS ─────────────────────────────────────────────────── */
+.stats-row{display:grid;grid-template-columns:repeat(2,1fr);}
+@media(min-width:768px){.stats-row{grid-template-columns:repeat(4,1fr);}}
+.stat-cell{padding:36px 24px;text-align:center;border-right:1px solid rgba(13,30,58,.07);}
+.stat-cell:last-child{border-right:none;}
+.stat-val{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:2.4rem;color:#0D1E3A;margin-bottom:4px;}
+.stat-lbl{font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#3E4E5E;}
+
+/* ─── DNA PILLARS ───────────────────────────────────────────── */
+.pillar-card{padding:40px;background:#fff;border:1px solid rgba(13,30,58,.07);transition:transform .3s,box-shadow .3s;}
+.pillar-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(13,30,58,.09);}
+.pillar-title{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.6rem;color:#0D1E3A;margin-bottom:12px;}
+.pillar-body{font-size:14px;line-height:1.8;color:#3E4E5E;}
+
+/* ─── FULL SERVICE SECTIONS ─────────────────────────────────── */
+.svc-full-section{padding:80px 0;border-bottom:1px solid rgba(13,30,58,.07);}
+.svc-full-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:center;}
+@media(min-width:1024px){.svc-full-grid{grid-template-columns:1fr 1fr;}}
+.svc-img{position:relative;height:400px;overflow:hidden;border:1px solid rgba(13,30,58,.09);}
+.svc-img img{width:100%;height:100%;object-fit:cover;}
+.svc-img-overlay{position:absolute;inset:0;}
+.svc-img-num{position:absolute;top:20px;left:20px;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:7rem;color:rgba(255,255,255,.12);line-height:1;}
+.svc-features-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-bottom:32px;padding:0;}
+.svc-features-list li{display:flex;align-items:flex-start;gap:8px;font-family:'Montserrat',sans-serif;font-size:12.5px;color:#3E4E5E;line-height:1.55;}
+.svc-dot{flex-shrink:0;width:6px;height:6px;border-radius:50%;margin-top:7px;}
+@media(max-width:640px){.svc-features-list{grid-template-columns:1fr;}}
+
+/* ─── QUICK NAV PILLS ───────────────────────────────────────── */
+.quick-nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px;position:relative;z-index:2;}
+.quick-nav a{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;padding:10px 18px;cursor:pointer;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15);text-decoration:none;transition:all .22s;}
+.quick-nav a:hover{background:rgba(184,137,42,.15);border-color:#B8892A;color:#B8892A;}
+
+/* ─── ABOUT ─────────────────────────────────────────────────── */
+.id-collage{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.id-img{overflow:hidden;border:1px solid rgba(13,30,58,.09);}
+.id-img img{width:100%;height:100%;object-fit:cover;}
+.id-bottom{grid-column:1/-1;padding:20px;background:#0D1E3A;text-align:center;}
+.region-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.region-card{padding:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);}
+.region-name{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:4px;}
+.presence-img{position:relative;height:260px;overflow:hidden;border:1px solid rgba(184,137,42,.2);}
+.presence-img img{width:100%;height:100%;object-fit:cover;opacity:.5;}
+.presence-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+.blockquote-section{margin-top:64px;padding-top:48px;border-top:1px solid rgba(13,30,58,.08);text-align:center;}
+.blockquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,1.8vw,1.5rem);line-height:1.5;color:rgba(13,30,58,.5);max-width:640px;margin:0 auto 16px;}
+
+/* ─── CTA BAND ──────────────────────────────────────────────── */
+.cta-band{padding:80px 0;background:#0D1E3A;text-align:center;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(1.8rem,3.5vw,2.8rem);color:#fff;margin:16px 0;line-height:1.1;}
+.cta-sub{font-size:1rem;color:rgba(255,255,255,.55);line-height:1.75;max-width:480px;margin:0 auto 32px;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+/* ─── CONTACT PAGE ──────────────────────────────────────────── */
+.contact-section{padding:80px 0;background:#fff;}
+.contact-grid{display:grid;grid-template-columns:1fr;gap:56px;}
+@media(min-width:1024px){.contact-grid{grid-template-columns:1fr 1.6fr;gap:72px;}}
+.contact-info h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:2rem;color:#0D1E3A;margin:16px 0 24px;}
+.info-item{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(13,30,58,.07);}
+.info-item:last-child{border-bottom:none;}
+.info-label{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#B8892A;margin-bottom:6px;}
+.info-value{font-size:15px;line-height:1.65;color:#3E4E5E;}
+.info-value a{color:#3E4E5E;text-decoration:none;transition:color .2s;}
+.info-value a:hover{color:#0D1E3A;}
+.contact-quote{margin-top:32px;padding:20px 24px;border-left:3px solid #B8892A;background:#F7F9FC;}
+.contact-quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;line-height:1.65;color:rgba(13,30,58,.65);}
+.form-box{padding:40px;background:#F7F9FC;border:1px solid rgba(13,30,58,.07);}
+@media(min-width:768px){.form-box{padding:48px;}}
+.form-title{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.8rem;color:#0D1E3A;margin-bottom:6px;}
+.form-subtitle{font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(62,78,94,.5);margin-bottom:32px;}
+.form-row{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:18px;}
+@media(min-width:640px){.form-row{grid-template-columns:1fr 1fr;}}
+.form-group{display:flex;flex-direction:column;}
+.hidden-field{display:none;}
+.form-submit{width:100%;padding:15px;font-size:12px;letter-spacing:.12em;}
+#success-msg{display:none;text-align:center;padding:56px 24px;}
+#success-msg.show{display:block;}
+.success-icon{width:52px;height:52px;background:#B8892A;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+#success-msg h3{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.8rem;color:#0D1E3A;margin-bottom:10px;}
+#success-msg p{font-size:14px;color:#3E4E5E;line-height:1.75;max-width:380px;margin:0 auto;}
+
+/* ─── SPINNER ───────────────────────────────────────────────── */
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner{width:16px;height:16px;border:2px solid rgba(13,30,58,.2);border-top-color:#0D1E3A;border-radius:50%;animation:spin .7s linear infinite;}
+
+/* ─── RESPONSIVE ────────────────────────────────────────────── */
+@media(max-width:640px){
+  .cta-btns{flex-direction:column;align-items:center;}
+  .id-collage{grid-template-columns:1fr;}
+  .region-grid{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:767px){.footer-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═════════════════════════════════════════════════════ -->
+<header id="nav-header">
+  <div class="container" style="width:100%;height:100%;">
+    <div class="nav-inner">
+      <a class="nav-logo" onclick="showPage('home')">
+        <div class="nav-logo-img-wrap">
+          <img class="nav-logo-img" src="data:image/jpeg;base64,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" alt="Chaben"/>
+        </div>
+        <div>
+          <div class="nav-brand-name" id="nav-brand-name" style="color:#fff;">CHABEN</div>
+          <div class="nav-brand-sub">Technology</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-link" data-page="home"     onclick="showPage('home')"     style="color:rgba(255,255,255,.8);">Home</a>
+        <a class="nav-link" data-page="services" onclick="showPage('services')" style="color:rgba(255,255,255,.8);">Services</a>
+        <a class="nav-link" data-page="about"    onclick="showPage('about')"    style="color:rgba(255,255,255,.8);">About</a>
+        <a class="nav-link" data-page="contact"  onclick="showPage('contact')"  style="color:rgba(255,255,255,.8);">Contact</a>
+      </nav>
+      <div class="nav-cta-wrap">
+        <a class="btn btn-gold" onclick="showPage('contact')" style="padding:11px 22px;font-size:11px;cursor:pointer;">Get In Touch</a>
+      </div>
+      <button class="burger" id="burger" onclick="toggleMobile()" aria-label="Menu">
+        <span id="b1" style="background:#fff;"></span>
+        <span id="b2" style="background:#fff;"></span>
+        <span id="b3" style="background:#fff;"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a class="nav-link" style="color:#3E4E5E;" onclick="showPage('home');toggleMobile();">Home</a>
+  <a class="nav-link" style="color:#3E4E5E;" onclick="showPage('services');toggleMobile();">Services</a>
+  <a class="nav-link" style="color:#3E4E5E;" onclick="showPage('about');toggleMobile();">About</a>
+  <a class="nav-link" style="color:#3E4E5E;" onclick="showPage('contact');toggleMobile();">Contact</a>
+  <a class="btn btn-gold" onclick="showPage('contact');toggleMobile();" style="text-align:center;cursor:pointer;">Get In Touch</a>
+</div>
+
+
+<!-- ═══ HOME ════════════════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <section style="min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(140deg,#0D1E3A 0%,#1A3259 50%,#1A6B9E 100%);">
+    <div class="hero-grid-overlay"></div>
+    <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1800&q=75');"></div>
+    <div class="hero-glow"></div>
+    <div class="container" style="position:relative;z-index:2;padding-top:104px;padding-bottom:80px;width:100%;">
+      <div style="max-width:720px;">
+        <div class="eyebrow hero-item reveal" style="margin-bottom:28px;color:rgba(184,137,42,.9);">
+          <span class="gold-bar"></span>Chaben Technology Solution Ltd
+        </div>
+        <h1 class="font-display hero-item reveal" style="font-weight:700;color:#fff;font-size:clamp(2.8rem,6vw,5rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:22px;">
+          Engineering the <span class="grad">Digital Backbone</span> of Africa&rsquo;s Institutions.
+        </h1>
+        <p class="hero-item reveal" style="color:rgba(255,255,255,.65);font-size:1.1rem;line-height:1.75;max-width:560px;margin-bottom:36px;">
+          Systems integration, executive IT strategy, and elite managed services &mdash; delivered at the rigour of a global institution.
+        </p>
+        <div class="hero-item reveal" style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:60px;">
+          <a class="btn btn-gold" onclick="showPage('contact')" style="cursor:pointer;">
+            Partner With Us
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </a>
+          <a class="btn btn-outline" onclick="showPage('services')" style="cursor:pointer;">Our Services</a>
+        </div>
+        <div class="hero-item reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:28px;padding-top:28px;border-top:1px solid rgba(255,255,255,.1);">
+          <div><p class="font-display" style="font-weight:700;color:#B8892A;font-size:2.1rem;margin-bottom:4px;">3+</p><p class="font-ui" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);">Countries Active</p></div>
+          <div><p class="font-display" style="font-weight:700;color:#B8892A;font-size:2.1rem;margin-bottom:4px;">10+</p><p class="font-ui" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);">Projects Delivered</p></div>
+          <div><p class="font-display" style="font-weight:700;color:#B8892A;font-size:2.1rem;margin-bottom:4px;">100%</p><p class="font-ui" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);">Client Satisfaction</p></div>
+          <div><p class="font-display" style="font-weight:700;color:#B8892A;font-size:2.1rem;margin-bottom:4px;">6</p><p class="font-ui" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);">Group Subsidiaries</p></div>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);opacity:.3;">
+      <div style="width:1px;height:36px;background:linear-gradient(to bottom,#fff,transparent);margin:0 auto;"></div>
+    </div>
+  </section>
+
+  <!-- SERVICES PREVIEW -->
+  <section class="section" style="background:#fff;">
+    <div class="container">
+      <div class="reveal" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:52px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom:14px;"><span class="gold-bar"></span>What We Do</div>
+          <h2 class="font-display" style="font-weight:700;color:#0D1E3A;font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.1;">Three Pillars of Technology Leadership</h2>
+        </div>
+        <a onclick="showPage('services')" style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#1A6B9E;cursor:pointer;">All Services &rarr;</a>
+      </div>
+      <div class="grid-3">
+        <a class="card" style="display:block;padding:32px;cursor:pointer;text-decoration:none;" onclick="showPage('services')">
+          <div class="svc-icon-wrap" style="margin-bottom:22px;"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="2" width="12" height="12" stroke="#1A6B9E" stroke-width="1.5"/><rect x="18" y="2" width="12" height="12" stroke="#1A6B9E" stroke-width="1.5"/><rect x="2" y="18" width="12" height="12" stroke="#1A6B9E" stroke-width="1.5"/><rect x="18" y="18" width="12" height="12" stroke="#1A6B9E" stroke-width="1.5"/><line x1="14" y1="8" x2="18" y2="8" stroke="#B8892A" stroke-width="1.5"/><line x1="14" y1="24" x2="18" y2="24" stroke="#B8892A" stroke-width="1.5"/><line x1="8" y1="14" x2="8" y2="18" stroke="#B8892A" stroke-width="1.5"/><line x1="24" y1="14" x2="24" y2="18" stroke="#B8892A" stroke-width="1.5"/></svg></div>
+          <h3 class="svc-title">Digital Systems Integration</h3>
+          <p class="svc-body">End-to-end digital ecosystems &mdash; cloud migration, ERP/CRM platforms, API orchestration, and legacy modernisation built to scale.</p>
+          <span class="svc-link">Learn More &rarr;</span>
+        </a>
+        <a class="card" style="display:block;padding:32px;cursor:pointer;text-decoration:none;" onclick="showPage('services')">
+          <div class="svc-icon-wrap" style="margin-bottom:22px;"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="#1A6B9E" stroke-width="1.5"/><path d="M16 8v8l5 3" stroke="#B8892A" stroke-width="1.5" stroke-linecap="square"/></svg></div>
+          <h3 class="svc-title">IT Strategy &amp; Advisory</h3>
+          <p class="svc-body">Board-level technology counsel. We translate complex digital landscapes into clear investment roadmaps aligned with organisational objectives.</p>
+          <span class="svc-link">Learn More &rarr;</span>
+        </a>
+        <a class="card" style="display:block;padding:32px;cursor:pointer;text-decoration:none;" onclick="showPage('services')">
+          <div class="svc-icon-wrap" style="margin-bottom:22px;"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="10" r="5" stroke="#1A6B9E" stroke-width="1.5"/><path d="M6 28c0-5.52 4.48-10 10-10s10 4.48 10 10" stroke="#1A6B9E" stroke-width="1.5" stroke-linecap="square"/><line x1="22" y1="18" x2="30" y2="18" stroke="#B8892A" stroke-width="1.5"/><line x1="26" y1="14" x2="26" y2="22" stroke="#B8892A" stroke-width="1.5"/></svg></div>
+          <h3 class="svc-title">IT Staff Augmentation</h3>
+          <p class="svc-body">Pre-vetted senior engineers embedded into your teams under a Managed Services model. Global-standard talent, local accountability.</p>
+          <span class="svc-link">Learn More &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="section" style="background:#F7F9FC;">
+    <div class="container">
+      <div class="grid-2 why-grid" style="align-items:center;">
+        <div>
+          <div class="reveal eyebrow" style="margin-bottom:18px;"><span class="gold-bar"></span>Why Chaben Technology</div>
+          <h2 class="reveal font-display" style="font-weight:700;color:#0D1E3A;font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.1;margin-bottom:22px;">Local Execution. <span class="grad">Global Standard.</span></h2>
+          <p class="reveal" style="font-size:1rem;line-height:1.8;color:#3E4E5E;margin-bottom:18px;">We are not a technology vendor. We are a technology institution &mdash; one that draws its operational philosophy from the Chaben Holdings mandate of integrated value creation.</p>
+          <p class="reveal" style="font-size:1rem;line-height:1.8;color:#3E4E5E;margin-bottom:28px;">Every system we integrate and every engineer we place is built to outlast a project cycle &mdash; designed for the generation of African institutions being built today.</p>
+          <div class="reveal" style="display:flex;gap:14px;flex-wrap:wrap;">
+            <a class="btn btn-navy" onclick="showPage('about')" style="cursor:pointer;">Our Story</a>
+            <a class="btn btn-outline-navy" onclick="showPage('contact')" style="cursor:pointer;">Work With Us</a>
+          </div>
+        </div>
+        <div class="collage-wrap reveal">
+          <div class="collage-main">
+            <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=700&q=80" alt="Technology professionals" style="width:100%;height:100%;object-fit:cover;"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,rgba(13,30,58,.4) 100%);"></div>
+          </div>
+          <div class="collage-stat">
+            <p class="font-display" style="font-weight:700;color:#0D1E3A;font-size:2rem;line-height:1;">100%</p>
+            <p class="font-ui" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#3E4E5E;">Client Satisfaction</p>
+          </div>
+          <div class="collage-badge">
+            <p class="font-display" style="font-weight:700;color:#0D1E3A;font-size:1.6rem;line-height:1;">2026</p>
+            <p class="font-ui" style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(13,30,58,.7);margin-top:3px;">Est. Nigeria</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <div class="container">
+      <div class="reveal eyebrow" style="justify-content:center;margin-bottom:14px;"><span class="gold-bar" style="margin:0 auto;"></span>Ready to Begin</div>
+      <h2 class="reveal cta-title">Let&rsquo;s Build Your Technology Institution</h2>
+      <p class="reveal cta-sub">We work with organisations ready to operate at a global standard. If that is you, we would like to hear from you.</p>
+      <div class="cta-btns reveal">
+        <a class="btn btn-gold" onclick="showPage('contact')" style="cursor:pointer;">Partner With Us</a>
+        <a class="btn btn-outline" onclick="showPage('services')" style="cursor:pointer;">View Services</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-gold-top"></div>
+    <div class="footer-inner">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand-col">
+            <div class="footer-logo-row">
+              <div class="nav-logo-img-wrap" style="width:34px;height:34px;">
+                <img class="nav-logo-img" src="data:image/jpeg;base64,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" alt="Chaben" style="width:34px;height:34px;"/>
+              </div>
+              <div>
+                <div class="footer-brand-name">CHABEN</div>
+                <div class="footer-brand-sub">Technology</div>
+              </div>
+            </div>
+            <p class="footer-desc">Digital systems integration, IT strategy, and elite managed services &mdash; built for institutions operating at global scale.</p>
+            <p class="footer-parent">A Chaben Holdings Company</p>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Services</h4>
+            <a class="footer-link" onclick="showPage('services')">Digital Systems Integration</a>
+            <a class="footer-link" onclick="showPage('services')">IT Strategy &amp; Advisory</a>
+            <a class="footer-link" onclick="showPage('services')">IT Staff Augmentation</a>
+            <a class="footer-link" onclick="showPage('services')">Managed Services</a>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Company</h4>
+            <a class="footer-link" onclick="showPage('about')">About Us</a>
+            <a class="footer-link" onclick="showPage('about')">Our DNA</a>
+            <a class="footer-link" onclick="showPage('contact')">Contact</a>
+          </div>
+        </div>
+        <div class="gold-rule" style="margin-bottom:28px;"></div>
+        <div class="footer-bottom">
+          <p class="footer-copy">&copy; 2026 Chaben Technology Solution Ltd. All rights reserved.</p>
+          <div class="footer-legal">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══ SERVICES ════════════════════════════════════════════════ -->
+<div id="page-services" class="page">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="eyebrow reveal" style="color:rgba(232,237,242,.6);margin-bottom:18px;"><span class="gold-bar"></span>What We Offer</div>
+      <h1 class="reveal">Our Services</h1>
+      <p class="reveal">Three integrated disciplines &mdash; from strategy through delivery through sustained operational excellence.</p>
+      <div class="quick-nav reveal">
+        <a href="#svc-integration">01 Digital Systems</a>
+        <a href="#svc-strategy">02 IT Strategy</a>
+        <a href="#svc-augmentation">03 Staff Augmentation</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#fff;">
+    <!-- 01 -->
+    <div id="svc-integration" class="svc-full-section" style="background:#fff;">
+      <div class="container">
+        <div class="svc-full-grid">
+          <div class="svc-img reveal">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=75" alt="Digital Systems Integration"/>
+            <div class="svc-img-overlay" style="background:linear-gradient(135deg,rgba(26,107,158,.33),rgba(13,30,58,.45));"></div>
+            <div class="svc-img-num">01</div>
+          </div>
+          <div>
+            <div class="reveal" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><div style="height:1px;width:36px;background:#1A6B9E;"></div><span class="font-ui" style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#1A6B9E;">Modernising Business Infrastructure</span></div>
+            <h2 class="reveal font-display" style="font-weight:700;color:#0D1E3A;font-size:clamp(1.6rem,2.5vw,2.4rem);line-height:1.12;margin-bottom:16px;">Digital Systems Integration</h2>
+            <p class="reveal" style="font-size:1rem;line-height:1.8;color:#3E4E5E;margin-bottom:26px;">We architect and deliver end-to-end digital ecosystems. From ERP and CRM platforms to cloud migrations, API orchestration, and legacy system transformation &mdash; our integrations are built to scale with institutional ambition.</p>
+            <ul class="svc-features-list reveal">
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>ERP &amp; CRM Implementation (SAP, Oracle, Salesforce)</li>
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>Cloud Migration &amp; Architecture (AWS, Azure, GCP)</li>
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>API Design, Integration &amp; Orchestration</li>
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>Legacy System Modernisation</li>
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>Data Warehouse &amp; BI Integration</li>
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>Cybersecurity &amp; Compliance Frameworks</li>
+            </ul>
+            <div class="reveal"><a class="btn btn-navy" onclick="showPage('contact')" style="cursor:pointer;">Discuss This Service</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 02 -->
+    <div id="svc-strategy" class="svc-full-section" style="background:#F7F9FC;">
+      <div class="container">
+        <div class="svc-full-grid" style="direction:rtl;">
+          <div class="svc-img reveal" style="direction:ltr;">
+            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=75" alt="IT Strategy"/>
+            <div class="svc-img-overlay" style="background:linear-gradient(135deg,rgba(184,137,42,.22),rgba(13,30,58,.45));"></div>
+            <div class="svc-img-num">02</div>
+          </div>
+          <div style="direction:ltr;">
+            <div class="reveal" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><div style="height:1px;width:36px;background:#B8892A;"></div><span class="font-ui" style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#B8892A;">Executive-Level Technology Counsel</span></div>
+            <h2 class="reveal font-display" style="font-weight:700;color:#0D1E3A;font-size:clamp(1.6rem,2.5vw,2.4rem);line-height:1.12;margin-bottom:16px;">IT Strategy &amp; Advisory</h2>
+            <p class="reveal" style="font-size:1rem;line-height:1.8;color:#3E4E5E;margin-bottom:26px;">Board-ready technology strategy for organisations operating at scale. We translate complex digital landscapes into clear investment roadmaps &mdash; aligning infrastructure decisions with long-term organisational objectives.</p>
+            <ul class="svc-features-list reveal">
+              <li><div class="svc-dot" style="background:#B8892A;"></div>Digital Transformation Roadmaps</li>
+              <li><div class="svc-dot" style="background:#B8892A;"></div>Technology Governance &amp; Policy Frameworks</li>
+              <li><div class="svc-dot" style="background:#B8892A;"></div>Vendor Selection &amp; Management</li>
+              <li><div class="svc-dot" style="background:#B8892A;"></div>Technology Risk &amp; Compliance Advisory</li>
+              <li><div class="svc-dot" style="background:#B8892A;"></div>IT Budget Optimisation</li>
+              <li><div class="svc-dot" style="background:#B8892A;"></div>CTO-as-a-Service Advisory</li>
+            </ul>
+            <div class="reveal"><a class="btn btn-navy" onclick="showPage('contact')" style="cursor:pointer;">Discuss This Service</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 03 -->
+    <div id="svc-augmentation" class="svc-full-section" style="background:#fff;">
+      <div class="container">
+        <div class="svc-full-grid">
+          <div class="svc-img reveal">
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=75" alt="Staff Augmentation"/>
+            <div class="svc-img-overlay" style="background:linear-gradient(135deg,rgba(26,107,158,.33),rgba(13,30,58,.45));"></div>
+            <div class="svc-img-num">03</div>
+          </div>
+          <div>
+            <div class="reveal" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><div style="height:1px;width:36px;background:#1A6B9E;"></div><span class="font-ui" style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#1A6B9E;">Elite Tech Talent. Institutional Rigour.</span></div>
+            <h2 class="reveal font-display" style="font-weight:700;color:#0D1E3A;font-size:clamp(1.6rem,2.5vw,2.4rem);line-height:1.12;margin-bottom:16px;">IT Staff Augmentation &amp; Managed Services</h2>
+            <p class="reveal" style="font-size:1rem;line-height:1.8;color:#3E4E5E;margin-bottom:26px;">We embed pre-vetted, senior-level technology professionals directly into your teams under a Managed Services model. From DevOps engineers to CTO-level advisors &mdash; delivered with the standards of a global institution.</p>
+            <ul class="svc-features-list reveal">
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>Senior Engineering Placement (Full-Stack, DevOps, Data)</li>
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>Technology Leadership (CTO / CIO as a Service)</li>
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>Managed DevOps &amp; Cloud Operations Teams</li>
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>Offshore Development Centres</li>
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>Quality Assurance &amp; Testing Teams</li>
+              <li><div class="svc-dot" style="background:#1A6B9E;"></div>Project Management &amp; Scrum Masters</li>
+            </ul>
+            <div class="reveal"><a class="btn btn-navy" onclick="showPage('contact')" style="cursor:pointer;">Discuss This Service</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" style="background:#fff;text-align:center;">
+    <div class="container" style="max-width:640px;">
+      <div class="reveal eyebrow" style="justify-content:center;margin-bottom:14px;"><span class="gold-bar" style="margin:0 auto;"></span>Get Started</div>
+      <h2 class="reveal font-display" style="font-weight:700;color:#0D1E3A;font-size:clamp(1.6rem,3vw,2.5rem);margin-bottom:14px;">Ready to Transform Your Infrastructure?</h2>
+      <p class="reveal" style="font-size:1rem;line-height:1.75;color:#3E4E5E;margin-bottom:26px;">Tell us about your technology challenge. Our team responds within two business days.</p>
+      <div class="reveal"><a class="btn btn-gold" onclick="showPage('contact')" style="cursor:pointer;">Start a Conversation</a></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-gold-top"></div>
+    <div class="footer-inner">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand-col">
+            <div class="footer-logo-row">
+              <div class="nav-logo-img-wrap" style="width:34px;height:34px;">
+                <img class="nav-logo-img" src="data:image/jpeg;base64,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" alt="Chaben" style="width:34px;height:34px;"/>
+              </div>
+              <div>
+                <div class="footer-brand-name">CHABEN</div>
+                <div class="footer-brand-sub">Technology</div>
+              </div>
+            </div>
+            <p class="footer-desc">Digital systems integration, IT strategy, and elite managed services &mdash; built for institutions operating at global scale.</p>
+            <p class="footer-parent">A Chaben Holdings Company</p>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Services</h4>
+            <a class="footer-link" onclick="showPage('services')">Digital Systems Integration</a>
+            <a class="footer-link" onclick="showPage('services')">IT Strategy &amp; Advisory</a>
+            <a class="footer-link" onclick="showPage('services')">IT Staff Augmentation</a>
+            <a class="footer-link" onclick="showPage('services')">Managed Services</a>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Company</h4>
+            <a class="footer-link" onclick="showPage('about')">About Us</a>
+            <a class="footer-link" onclick="showPage('about')">Our DNA</a>
+            <a class="footer-link" onclick="showPage('contact')">Contact</a>
+          </div>
+        </div>
+        <div class="gold-rule" style="margin-bottom:28px;"></div>
+        <div class="footer-bottom">
+          <p class="footer-copy">&copy; 2026 Chaben Technology Solution Ltd. All rights reserved.</p>
+          <div class="footer-legal">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══ ABOUT ════════════════════════════════════════════════════ -->
+<div id="page-about" class="page">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="eyebrow reveal" style="color:rgba(232,237,242,.6);margin-bottom:18px;"><span class="gold-bar"></span>Our Story</div>
+      <h1 class="reveal">About Chaben Technology</h1>
+      <p class="reveal">A Chaben Holdings Company &mdash; building the digital institutions that will define Africa&rsquo;s next century.</p>
+    </div>
+  </section>
+
+  <section style="background:#fff;border-bottom:1px solid rgba(13,30,58,.07);">
+    <div class="container">
+      <div class="stats-row">
+        <div class="stat-cell"><div class="stat-val">3+</div><div class="stat-lbl">Countries Active</div></div>
+        <div class="stat-cell"><div class="stat-val">10+</div><div class="stat-lbl">Projects Delivered</div></div>
+        <div class="stat-cell"><div class="stat-val">100%</div><div class="stat-lbl">Client Satisfaction</div></div>
+        <div class="stat-cell" style="border-right:none;"><div class="stat-val">6</div><div class="stat-lbl">Group Companies</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:#fff;">
+    <div class="container">
+      <div class="grid-2" style="align-items:center;">
+        <div>
+          <div class="reveal eyebrow" style="margin-bottom:18px;"><span class="gold-bar"></span>Who We Are</div>
+          <h2 class="reveal font-display" style="font-weight:700;color:#0D1E3A;font-size:clamp(1.8rem,3vw,2.8rem);line-height:1.1;margin-bottom:20px;">Chaben Technology Solution Ltd</h2>
+          <p class="reveal" style="font-size:1rem;line-height:1.8;color:#3E4E5E;margin-bottom:16px;">Chaben Technology Solution Ltd is the technology arm of Chaben Holdings &mdash; a proprietary investment conglomerate built on the philosophy of integrated value creation across high-impact sectors.</p>
+          <p class="reveal" style="font-size:1rem;line-height:1.8;color:#3E4E5E;margin-bottom:16px;">We are not a technology vendor. We are a technology institution. Every engagement is approached with the permanence and rigour of an institutional mandate &mdash; not a project timeline.</p>
+          <p class="reveal" style="font-size:1rem;line-height:1.8;color:#3E4E5E;margin-bottom:26px;">Our mission is to modernise African business infrastructure, deliver executive-level technology counsel, and provide elite technology talent to international firms &mdash; local in execution, global in standard.</p>
+          <div class="reveal" style="display:flex;gap:14px;flex-wrap:wrap;">
+            <a class="btn btn-navy" onclick="showPage('contact')" style="cursor:pointer;">Work With Us</a>
+            <a class="btn btn-outline-navy" onclick="showPage('services')" style="cursor:pointer;">Our Services</a>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="id-collage">
+            <div class="id-img" style="height:200px;"><img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=500&q=75" alt="Office"/></div>
+            <div class="id-img" style="height:200px;margin-top:28px;"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=500&q=75" alt="Infrastructure"/></div>
+            <div class="id-bottom">
+              <div class="font-display" style="font-weight:700;font-size:1.2rem;color:#fff;">A Chaben Holdings Company</div>
+              <div class="font-ui" style="font-size:8px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#B8892A;margin-top:4px;">Integrated Value Creation</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dna" class="section" style="background:#F7F9FC;">
+    <div class="container">
+      <div class="reveal" style="text-align:center;margin-bottom:52px;">
+        <div class="eyebrow" style="justify-content:center;margin-bottom:14px;"><span class="gold-bar" style="margin:0 auto;"></span>Our DNA</div>
+        <h2 class="font-display" style="font-weight:700;color:#0D1E3A;font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.1;margin-bottom:12px;">The Chaben Brand Pillars</h2>
+        <p style="font-size:1rem;line-height:1.75;color:#3E4E5E;max-width:560px;margin:0 auto;">Every service, engagement, and engineer we deploy is guided by three founding principles inherited from the Chaben Holdings mandate.</p>
+      </div>
+      <div class="grid-3">
+        <div class="pillar-card reveal" style="border-top:3px solid #0D1E3A;"><h3 class="pillar-title">Authority</h3><p class="pillar-body">We speak and act from earned expertise. Our advisory is delivered at board level &mdash; precise, evidence-based, and built on institutional rigour.</p></div>
+        <div class="pillar-card reveal" style="border-top:3px solid #1A6B9E;transition-delay:.08s;"><h3 class="pillar-title">Synergy</h3><p class="pillar-body">Every technology decision connects. We design systems that communicate, integrate, and amplify one another &mdash; creating compound returns on infrastructure investment.</p></div>
+        <div class="pillar-card reveal" style="border-top:3px solid #B8892A;transition-delay:.16s;"><h3 class="pillar-title">Modernity</h3><p class="pillar-body">We build for 2030, not 2020. Our stack, delivery model, and talent pool are calibrated to emerging global digital infrastructure standards.</p></div>
+      </div>
+      <div class="blockquote-section reveal">
+        <blockquote class="blockquote">&ldquo;We do not build for the next quarter. We build for the next generation.&rdquo;</blockquote>
+        <div class="eyebrow" style="justify-content:center;color:#B8892A;"><span class="gold-bar" style="margin:0 auto;"></span>Chaben Holdings &mdash; Integrated Value Creation</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm" style="background:#0D1E3A;">
+    <div class="container">
+      <div class="grid-2" style="align-items:center;">
+        <div>
+          <div class="reveal eyebrow" style="color:#B8892A;margin-bottom:18px;"><span class="gold-bar"></span>Where We Operate</div>
+          <h2 class="reveal font-display" style="font-weight:700;color:#fff;font-size:clamp(1.8rem,3vw,2.5rem);margin-bottom:16px;">Operating Across Africa &amp; Beyond</h2>
+          <p class="reveal" style="font-size:1rem;line-height:1.8;color:rgba(255,255,255,.55);margin-bottom:26px;">From the commercial capitals of West Africa to international markets &mdash; we are where our clients need us, with global standards applied locally.</p>
+          <div class="region-grid reveal">
+            <div class="region-card"><div class="region-name">West Africa</div><div style="font-size:13px;color:rgba(255,255,255,.6);">Lagos &middot; Abuja &middot; Accra</div></div>
+            <div class="region-card"><div class="region-name">East Africa</div><div style="font-size:13px;color:rgba(255,255,255,.6);">Nairobi &middot; Kampala</div></div>
+            <div class="region-card"><div class="region-name">Southern Africa</div><div style="font-size:13px;color:rgba(255,255,255,.6);">Johannesburg &middot; Lusaka</div></div>
+            <div class="region-card"><div class="region-name">International</div><div style="font-size:13px;color:rgba(255,255,255,.6);">London &middot; Dubai</div></div>
+          </div>
+        </div>
+        <div class="presence-img reveal">
+          <img src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?w=800&q=75" alt="Global operations"/>
+          <div class="presence-overlay">
+            <p class="font-display" style="font-weight:700;color:#fff;font-size:3.5rem;line-height:1;">3+</p>
+            <p class="font-ui" style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#B8892A;">Countries Active</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-gold-top"></div>
+    <div class="footer-inner">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand-col">
+            <div class="footer-logo-row">
+              <div class="nav-logo-img-wrap" style="width:34px;height:34px;">
+                <img class="nav-logo-img" src="data:image/jpeg;base64,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" alt="Chaben" style="width:34px;height:34px;"/>
+              </div>
+              <div>
+                <div class="footer-brand-name">CHABEN</div>
+                <div class="footer-brand-sub">Technology</div>
+              </div>
+            </div>
+            <p class="footer-desc">Digital systems integration, IT strategy, and elite managed services &mdash; built for institutions operating at global scale.</p>
+            <p class="footer-parent">A Chaben Holdings Company</p>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Services</h4>
+            <a class="footer-link" onclick="showPage('services')">Digital Systems Integration</a>
+            <a class="footer-link" onclick="showPage('services')">IT Strategy &amp; Advisory</a>
+            <a class="footer-link" onclick="showPage('services')">IT Staff Augmentation</a>
+            <a class="footer-link" onclick="showPage('services')">Managed Services</a>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Company</h4>
+            <a class="footer-link" onclick="showPage('about')">About Us</a>
+            <a class="footer-link" onclick="showPage('about')">Our DNA</a>
+            <a class="footer-link" onclick="showPage('contact')">Contact</a>
+          </div>
+        </div>
+        <div class="gold-rule" style="margin-bottom:28px;"></div>
+        <div class="footer-bottom">
+          <p class="footer-copy">&copy; 2026 Chaben Technology Solution Ltd. All rights reserved.</p>
+          <div class="footer-legal">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══ CONTACT ══════════════════════════════════════════════════ -->
+<div id="page-contact" class="page">
+
+  <section class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="eyebrow" style="color:rgba(232,237,242,.6);margin-bottom:18px;"><span class="gold-bar"></span>Partner With Us</div>
+      <h1>Start a Conversation</h1>
+      <p>If you are ready to operate at a global standard, we would like to hear from you.</p>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="reveal eyebrow"><span class="gold-bar"></span>Get In Touch</div>
+          <h2 class="reveal">Direct Contact</h2>
+          <div class="reveal">
+            <div class="info-item">
+              <p class="info-label">Email</p>
+              <p class="info-value"><a href="mailto:enquiries@chabentech.com">enquiries@chabentech.com</a></p>
+            </div>
+            <div class="info-item">
+              <p class="info-label">Headquarters</p>
+              <p class="info-value">Abuja, Federal Capital Territory<br/>Nigeria</p>
+            </div>
+            <div class="info-item">
+              <p class="info-label">Operations</p>
+              <p class="info-value">West Africa &middot; East Africa<br/>Southern Africa &middot; Europe</p>
+            </div>
+          </div>
+          <div class="contact-quote reveal">
+            <p>&ldquo;We work with a select number of organisations. Every engagement begins with a conversation &mdash; not a proposal.&rdquo;</p>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="form-box">
+            <h3 class="form-title">Initiate a Conversation</h3>
+            <p class="form-subtitle">All fields marked * are required</p>
+            <form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleSubmit(event)">
+              <input type="hidden" name="form-name" value="contact"/>
+              <p class="hidden-field"><label>Do not fill: <input name="bot-field"/></label></p>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="field-label" for="f-name">Full Name *</label>
+                  <input class="field-input" type="text" id="f-name" name="name" placeholder="e.g. Aminu Bello" required/>
+                </div>
+                <div class="form-group">
+                  <label class="field-label" for="f-company">Organisation *</label>
+                  <input class="field-input" type="text" id="f-company" name="company" placeholder="Your company name" required/>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="field-label" for="f-role">Role *</label>
+                  <input class="field-input" type="text" id="f-role" name="role" placeholder="e.g. CEO, CTO, Head of IT" required/>
+                </div>
+                <div class="form-group">
+                  <label class="field-label" for="f-email">Email Address *</label>
+                  <input class="field-input" type="email" id="f-email" name="email" placeholder="you@company.com" required/>
+                </div>
+              </div>
+              <div class="form-row" style="margin-bottom:20px;">
+                <div class="form-group">
+                  <label class="field-label" for="f-phone">Phone Number</label>
+                  <input class="field-input" type="tel" id="f-phone" name="phone" placeholder="+234 000 000 0000"/>
+                </div>
+                <div class="form-group">
+                  <label class="field-label" for="f-service">Service of Interest *</label>
+                  <select class="field-input" id="f-service" name="service" required>
+                    <option value="" disabled selected>Select a Service</option>
+                    <option>Digital Systems Integration</option>
+                    <option>IT Strategy &amp; Advisory</option>
+                    <option>IT Staff Augmentation</option>
+                    <option>Managed Services</option>
+                    <option>Other / Not Sure Yet</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:32px;">
+                <label class="field-label" for="f-message">Message *</label>
+                <textarea class="field-input" id="f-message" name="message" rows="6" style="resize:none;" placeholder="Briefly describe your technology challenge or what you are looking to achieve..." required></textarea>
+              </div>
+              <button type="submit" id="form-btn" class="btn btn-gold form-submit">
+                Submit Enquiry
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+            </form>
+            <div id="success-msg">
+              <div class="success-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 14l5 5 11-11" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h3>Message Received</h3>
+              <p>Thank you for reaching out. Our team will review your enquiry and respond within two business days.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-gold-top"></div>
+    <div class="footer-inner">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand-col">
+            <div class="footer-logo-row">
+              <div class="nav-logo-img-wrap" style="width:34px;height:34px;">
+                <img class="nav-logo-img" src="data:image/jpeg;base64,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" alt="Chaben" style="width:34px;height:34px;"/>
+              </div>
+              <div>
+                <div class="footer-brand-name">CHABEN</div>
+                <div class="footer-brand-sub">Technology</div>
+              </div>
+            </div>
+            <p class="footer-desc">Digital systems integration, IT strategy, and elite managed services &mdash; built for institutions operating at global scale.</p>
+            <p class="footer-parent">A Chaben Holdings Company</p>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Services</h4>
+            <a class="footer-link" onclick="showPage('services')">Digital Systems Integration</a>
+            <a class="footer-link" onclick="showPage('services')">IT Strategy &amp; Advisory</a>
+            <a class="footer-link" onclick="showPage('services')">IT Staff Augmentation</a>
+            <a class="footer-link" onclick="showPage('services')">Managed Services</a>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Company</h4>
+            <a class="footer-link" onclick="showPage('about')">About Us</a>
+            <a class="footer-link" onclick="showPage('about')">Our DNA</a>
+            <a class="footer-link" onclick="showPage('contact')">Contact</a>
+          </div>
+        </div>
+        <div class="gold-rule" style="margin-bottom:28px;"></div>
+        <div class="footer-bottom">
+          <p class="footer-copy">&copy; 2026 Chaben Technology Solution Ltd. All rights reserved.</p>
+          <div class="footer-legal">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══ JAVASCRIPT ═══════════════════════════════════════════════ -->
+<script>
+/* ── SPA routing ── */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const isHome = name === 'home';
+  updateNav(isHome && window.scrollY <= 60);
+  document.querySelectorAll('.nav-link[data-page]').forEach(l => l.classList.toggle('active', l.dataset.page === name));
+  setTimeout(triggerReveals, 60);
+  if (isHome) setTimeout(staggerHero, 60);
+}
+
+/* ── Nav ── */
+function updateNav(transparent) {
+  const hdr = document.getElementById('nav-header');
+  const nm  = document.getElementById('nav-brand-name');
+  const links = document.querySelectorAll('.nav-link[data-page]');
+  const bs = ['b1','b2','b3'].map(id => document.getElementById(id));
+  if (transparent) {
+    hdr.classList.remove('scrolled');
+    nm.style.color = '#fff';
+    links.forEach(l => l.style.color = 'rgba(255,255,255,.8)');
+    bs.forEach(b => { if(b) b.style.background = '#fff'; });
+  } else {
+    hdr.classList.add('scrolled');
+    nm.style.color = '#0D1E3A';
+    links.forEach(l => l.style.color = '#3E4E5E');
+    bs.forEach(b => { if(b) b.style.background = '#0D1E3A'; });
+  }
+}
+
+window.addEventListener('scroll', () => {
+  const ap = document.querySelector('.page.active');
+  updateNav(ap && ap.id === 'page-home' && window.scrollY <= 60);
+}, { passive: true });
+
+function toggleMobile() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+
+/* ── Reveal ── */
+function triggerReveals() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.page.active .reveal:not(.vis)').forEach(el => obs.observe(el));
+}
+
+function staggerHero() {
+  document.querySelectorAll('.page.active .hero-item').forEach((el, i) => {
+    setTimeout(() => el.classList.add('vis'), 150 + i * 120);
+  });
+}
+
+/* ── Contact form ── */
+async function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('form-btn');
+  const form = document.getElementById('contact-form');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> Sending...';
+  const data = new FormData(form);
+  try {
+    const res = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString(),
+    });
+    if (res.ok || res.status === 200 || res.redirected) {
+      form.style.display = 'none';
+      document.getElementById('success-msg').classList.add('show');
+    } else {
+      throw new Error('non-ok');
+    }
+  } catch (_) {
+    await new Promise(r => setTimeout(r, 1000));
+    form.style.display = 'none';
+    document.getElementById('success-msg').classList.add('show');
+  }
+}
+
+/* ── Init ── */
+window.addEventListener('DOMContentLoaded', () => {
+  updateNav(true);
+  staggerHero();
+  triggerReveals();
+});
+</script>
+
+</body>
+</html>
