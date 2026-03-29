@@ -1024,30 +1024,51 @@ function staggerHero() {
   });
 }
 
-/* ── Contact form ── */
+/* ── Updated Contact form for Web3Forms ── */
 async function handleSubmit(e) {
   e.preventDefault();
   const btn = document.getElementById('form-btn');
   const form = document.getElementById('contact-form');
+  
+  // 1. Prepare UI
   btn.disabled = true;
   btn.innerHTML = '<div class="spinner"></div> Sending...';
+
+  // 2. Prepare Data
   const data = new FormData(form);
+  
+  // 3. Add your Access Key to the data automatically
+  data.append("access_key", "410865ef-5fc7-4f00-96f8-b46caf395178");
+  data.append("subject", "New Inquiry - Chaben Technology");
+
   try {
-    const res = await fetch('/', {
+    // 4. Send to Web3Forms API instead of '/'
+    const res = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(data).toString(),
+      // Web3Forms works best with application/json for AJAX/Fetch
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json' 
+      },
+      body: JSON.stringify(Object.fromEntries(data)),
     });
-    if (res.ok || res.status === 200 || res.redirected) {
+
+    const result = await res.json();
+
+    if (res.status === 200) {
+      // 5. Success UI
       form.style.display = 'none';
       document.getElementById('success-msg').classList.add('show');
     } else {
-      throw new Error('non-ok');
+      console.log(result.message); // Log error message for debugging
+      throw new Error('Submission failed');
     }
-  } catch (_) {
-    await new Promise(r => setTimeout(r, 1000));
-    form.style.display = 'none';
-    document.getElementById('success-msg').classList.add('show');
+  } catch (err) {
+    // 6. Error Handling
+    console.error(err);
+    alert("Something went wrong. Please try again or email us directly.");
+    btn.disabled = false;
+    btn.innerHTML = 'Send Message';
   }
 }
 
